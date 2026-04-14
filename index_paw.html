@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtre JSON Mobile</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f0f0f0; margin: 0; }
+        #searchBar { 
+            width: 100%; padding: 15px; border-radius: 10px; 
+            border: 1px solid #ccc; font-size: 16px; margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .card { 
+            background: white; padding: 15px; border-radius: 10px; 
+            margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+        .card h2 { margin: 0; font-size: 1.2em; color: #333; }
+        .card p { margin: 5px 0 0; color: #666; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="searchBar" placeholder="Rechercher..." oninput="filtrer()">
+    <div id="container">Chargement des données...</div>
+
+    <script>
+        let donneesItems = []; // Stockage global des données
+
+        // Étape 1 : Charger le fichier JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                donneesItems = data;
+                afficher(donneesItems);
+            })
+            .catch(error => {
+                document.getElementById('container').innerHTML = "Erreur de chargement.";
+                console.error(error);
+            });
+
+        // Étape 2 : Afficher les éléments
+        function afficher(items) {
+            const container = document.getElementById('container');
+            container.innerHTML = ""; // On vide le message de chargement
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<h2>${item.nom}</h2><p>${item.desc}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        // Étape 3 : Filtrer dynamiquement
+        function filtrer() {
+            const mot = document.getElementById('searchBar').value.toLowerCase();
+            const cartes = document.querySelectorAll('.card');
+            
+            cartes.forEach(carte => {
+                const texte = carte.innerText.toLowerCase();
+                if (texte.includes(mot)) {
+                    carte.classList.remove('hidden');
+                } else {
+                    carte.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
