@@ -1,6 +1,0 @@
-[
-    {"nom": "Pommes PAW", "desc": "Fruit rouge ou vert.", "cat": "Fruit"},
-    {"nom": "Bananes", "desc": "Fruit jaune courbé.", "cat": "Fruit"},
-    {"nom": "Carottes", "desc": "Légume orange croquant.", "cat": "Légume"},
-    {"nom": "Dattes", "desc": "Fruit sucré du désert.", "cat": "Fruit"}
-]
